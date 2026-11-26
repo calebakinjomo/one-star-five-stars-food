@@ -7,6 +7,9 @@ that still compliments the food, to /output/entry.txt.
 
 import os
 
+MAX_ENTRY_CHARS = 200
+OUTPUT_PATH = "/output/entry.txt"
+
 ENTRY = (
     "One star for a planet whose chairs fit only two legs and whose locals "
     "stare when I eat with all four hands, but the noodles alone were worth "
@@ -15,10 +18,11 @@ ENTRY = (
 
 
 def main() -> None:
-    assert 1 <= len(ENTRY) <= 200, f"entry is {len(ENTRY)} chars"
+    if not 1 <= len(ENTRY) <= MAX_ENTRY_CHARS:
+        raise ValueError(f"entry is {len(ENTRY)} chars, max {MAX_ENTRY_CHARS}")
     assert ENTRY.count(".") == 1, "entry must be exactly one sentence"
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
+    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         f.write(ENTRY)
 
 
